@@ -1,3 +1,4 @@
+/*
 #container {
   text-align: center;
 
@@ -8,20 +9,31 @@
   transform: translateY(-50%);
 }
 
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
+*/
+.body{
+  --ion-background-color: linear-gradient(90deg, #C7C5F4, #776BCC);
+  ion-item{
+    --background: rgba($color: #000000, $alpha: 0.25);
+  }
+  .card{
+    background-color: rgba($color: #000000, $alpha: 0.75);
+    overflow: scroll;
+    max-height: 300px;
+    border-radius: 10px;
+  }
+ ion-item{
+  background-color: none;
+ }
 }
-
-#container p {
-  font-size: 16px;
-  line-height: 22px;
-
-  color: #8c8c8c;
-
-  margin: 0;
+.con_fast{
+  color:lightgreen;
 }
-
-#container a {
-  text-decoration: none;
+.con_medium{
+  color:yellow;
+}
+.con_slow{
+  color:orange;
+}
+.con_lost{
+  color:red;
 }

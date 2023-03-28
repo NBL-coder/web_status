@@ -1,20 +1,91 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
+    <ion-buttons slot="start" (click) = "logout()">
+      <ion-icon slot="start" name="log-out"></ion-icon>
+      Log out
+    </ion-buttons>
     <ion-title>
-      Blank
+      Account: {{curernt_user}}
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
+<ion-content [fullscreen]="true" class=" body">
   <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+    <ion-card class = "card">
+      <ion-card-header>
+        <ion-card-title>{{data_action}} Website</ion-card-title>
+      </ion-card-header>
+    
+      <ion-card-content>
+        <ion-input type ="text" placeholder="name" [(ngModel)] = "name"></ion-input>
+        <ion-input type ="text" placeholder="url" [(ngModel)] = "url"></ion-input>
+        <ion-input type ="text" placeholder="category" [(ngModel)] = "category"></ion-input>
+      </ion-card-content>
+    
+      <ion-button fill="clear" (click)="selected_index == -1 ? addData(): updateData()" [disabled] = "name == undefined || url == undefined || category == undefined||name == '' || url == '' || category == ''? true:false">{{data_action}}</ion-button>
+      <ion-button fill="clear" (click)= "cancel_select()"> Cancel</ion-button>
+    </ion-card>
+   
+    <ion-card class = "card">
+      <ion-card-header>
+
+        <ion-card-title>{{name_info}}</ion-card-title>
+        
+      </ion-card-header>
+      <ion-card-content>
+       {{category_info}} 
+      </ion-card-content>
+      <ion-card-content>
+       Site infomation
+       <div *ngFor="let item of Data; let i=index;">
+        <ion-item *ngIf="(i == selected_index)">
+          <ion-label>{{url_info}}</ion-label>
+          <div *ngFor="let url_item of url_ping_result; let _i =index;" >
+            <ion-label *ngIf="(item.url == url_item.url)" >{{url_item.ping.toString()}}</ion-label>
+          </div>
+          <div *ngFor="let url_item of url_ping_result; let _i =index;">
+            <ion-icon *ngIf="(item.url == url_item.url)" [ngClass]="getClassOf(url_item.ping)" name="ellipse"></ion-icon>
+          </div>
+        </ion-item>
+       </div>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card class = "card">
+      <ion-card-header>
+        <ion-card-title>category Filter</ion-card-title>
+      </ion-card-header>
+    
+      <ion-card-content>
+        <ion-select interface="popover" placeholder="filter" [(ngModel)] = "filter">
+          <ion-select-option value="All">All</ion-select-option>
+          <ion-select-option *ngFor="let item of categories_arr; let i=index;" value={{item}}>{{item}}</ion-select-option>
+        </ion-select>
+      </ion-card-content>
+    </ion-card>
+    <ion-card class = "card">
+
+      <ion-card-content>
+
+          <ion-item-sliding *ngFor="let item of Data; let i=index;">
+            <ion-item detail="true" *ngIf="(item.categories == filter || filter == default_filter)" (click)="getItemInfo(i)">
+              <ion-label>{{item.name}}</ion-label>
+              <ion-label>{{item.categories}}</ion-label>
+              <div *ngFor="let url_item of url_ping_result; let _i =index;" >
+                <ion-label *ngIf="(item.url == url_item.url)" >{{url_item.ping.toString()}}</ion-label>
+              </div>
+              <div *ngFor="let url_item of url_ping_result; let _i =index;">
+                <ion-icon slot="end" *ngIf="(item.url == url_item.url)" [ngClass]="getClassOf(url_item.ping)" name="ellipse"></ion-icon>
+              </div>
+            </ion-item>
+        
+            <ion-item-options>
+              <ion-item-option color="danger" (click)="removeData(i)">Delete</ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
+
+      </ion-card-content>
+    </ion-card>
   </div>
 </ion-content>
