@@ -42,7 +42,7 @@
         <ion-item *ngIf="(i == selected_index)">
           <ion-label>{{url_info}}</ion-label>
           <div *ngFor="let url_item of url_ping_result; let _i =index;" >
-            <ion-label *ngIf="(item.url == url_item.url)" >{{url_item.ping}}</ion-label>
+            <ion-label *ngIf="(item.url == url_item.url)" >{{url_item.ping.toString()}}</ion-label>
           </div>
           <div *ngFor="let url_item of url_ping_result; let _i =index;">
             <ion-icon *ngIf="(item.url == url_item.url)" [ngClass]="getClassOf(url_item.ping)" name="ellipse"></ion-icon>
@@ -73,7 +73,7 @@
               <ion-label>{{item.name}}</ion-label>
               <ion-label>{{item.categories}}</ion-label>
               <div *ngFor="let url_item of url_ping_result; let _i =index;" >
-                <ion-label *ngIf="(item.url == url_item.url)" >{{url_item.ping}}</ion-label>
+                <ion-label *ngIf="(item.url == url_item.url)" >{{url_item.ping.toString()}}</ion-label>
               </div>
               <div *ngFor="let url_item of url_ping_result; let _i =index;">
                 <ion-icon slot="end" *ngIf="(item.url == url_item.url)" [ngClass]="getClassOf(url_item.ping)" name="ellipse"></ion-icon>

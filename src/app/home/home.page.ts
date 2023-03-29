@@ -32,14 +32,13 @@ export class HomePage {
   categories_arr:any = [];
   Data:any = [];
   observable= interval(2000);
-  subscription:any;
   constructor(
     private conn: ConectionsService, 
     private dataservice: DataService, 
     private rouuter:Router,
     private authen:AuthenticationService 
     ) {
-    this.subscription = this.observable.subscribe(val => {
+    const subscription = this.observable.subscribe(val => {
      //this.url_ping_result= [];
      this.url_list = [...new Set(this.Data.map((item:any) => item.url))];
      this.url_list.forEach((element:any) => {
@@ -73,6 +72,7 @@ export class HomePage {
       return 'con_lost'
     }
   }
+
   loadData(filter:any){ 
     //this.Data = await this.dataservice.getData();
     this.dataservice.getData().subscribe(res =>{
@@ -85,9 +85,9 @@ export class HomePage {
   }
   async addData(){
     await this.dataservice.addData(
-      { name: this.name.toString(), 
-        url: this.url.toString(),
-        categories: this.category.toString()
+      { name: this.name, 
+        url: this.url,
+        categories: this.category
       });
     this.name = "";
     this.url = "";
@@ -102,9 +102,9 @@ export class HomePage {
   }
   async updateData(){
     var new_item = { 
-      name: this.name.toString(), 
-      url: this.url.toString(),
-      categories: this.category.toString()
+      name: this.name, 
+      url: this.url,
+      categories: this.category
     };
     await this.dataservice.updateData(this.selected_index,new_item);
     this.loadData(this.filter);
@@ -143,8 +143,4 @@ export class HomePage {
   logout(){
     this.authen.logout();
   }
-  ngOnDestroy(){
-    console.log("logout");
-    this.subscription.unsubscribe();
-  } 
 }
